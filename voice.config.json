@@ -1,0 +1,15 @@
+{
+	"system": {
+		"voice": "Paulina"
+	},
+	"elevenlabs": {
+		"voiceId": "",
+		"model": "eleven_multilingual_v2",
+		"settings": {
+			"stability": 0.5,
+			"similarity_boost": 0.75,
+			"style": 0,
+			"speed": 1
+		}
+	}
+}

@@ -55,7 +55,11 @@ nunca se corta; si una frase alarga demasiado una escena, se acorta la frase.
 ```bash
 npm run studio                     # editor en el navegador, con vista previa en vivo
 npm run audio <video>              # voz de borrador + timing.json
-npm run audio <video> -- --keep    # solo mide los audios que ya estén (voz definitiva)
+npm run audio <video> -- --keep    # solo mide los audios que ya estén (voz de un locutor)
+npm run audio <video> -- --provider elevenlabs --dry   # qué generaría y cuántos caracteres (gratis)
+npm run audio <video> -- --provider elevenlabs         # voz natural, DE PAGO: se pregunta antes
+npm run audio -- --voices          # voces de la cuenta de ElevenLabs, con su id
+npm run audio <video> -- --try <id>,<id> --scene hook  # prueba de oído en out/voces/ (de pago)
 npm run video <video>              # renderiza los dos formatos
 npm run video <video> -- --mute    # además, versiones sin sonido
 npx remotion still src/index.jsx <video>-feed out/x.png --frame=120   # un fotograma para revisar
@@ -63,8 +67,14 @@ npx remotion still src/index.jsx <video>-feed out/x.png --frame=120   # un fotog
 
 ## Voz y música
 
-- La voz de `npm run audio` es la del sistema: un BORRADOR para medir tiempos. La definitiva se
-  pone sustituyendo `public/audio/<video>/vo-<escena>.wav` y corriendo `npm run audio <video> -- --keep`.
+- La voz de `npm run audio` es la del sistema: un BORRADOR para medir tiempos. La definitiva
+  sale con `--provider elevenlabs`; la voz y sus ajustes están en `voice.config.json` (los
+  mismos para todos los videos) y la clave en `.env` (`ELEVENLABS_API_KEY=`, propia de este
+  proyecto, nunca una de la app).
+- Solo se vuelve a generar la frase cuyo texto, voz o ajustes cambiaron (huella por escena en
+  `timing.json`). El borrador no pisa una voz de pago salvo con `--force`.
+- Para la voz de un locutor: sustituir `public/audio/<video>/vo-<escena>.wav` y correr
+  `npm run audio <video> -- --keep`.
 - La música va en `public/music/<video>.mp3` o `public/music/default.mp3`. Baja sola mientras
   hay voz. Solo música con licencia para uso comercial; anota de dónde salió en `GUSTOS.md`.
 - Generar voz con un servicio de pago cuesta dinero: se pregunta antes.

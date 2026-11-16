@@ -40,12 +40,14 @@ de espera, no un servicio de locución.
 
 - [ ] Erich crea la cuenta y deja la clave en `~/webs/qvapay-videos/.env` (`ELEVENLABS_API_KEY=`).
       Nunca una clave del proyecto de la app. `.env` va al `.gitignore`.
-- [ ] `scripts/audio.mjs`: añadir `--provider elevenlabs` junto a la voz del sistema. Mismo
+- [x] `scripts/audio.mjs`: añadir `--provider elevenlabs` junto a la voz del sistema. Mismo
       contrato: un archivo por escena en `public/audio/<video>/vo-<escena>.wav` y `timing.json`.
-- [ ] Guardar la voz elegida y sus ajustes en un `voice.config.json` del proyecto, para que todos
+- [x] Guardar la voz elegida y sus ajustes en un `voice.config.json` del proyecto, para que todos
       los videos suenen igual.
-- [ ] No regenerar una frase cuyo texto no cambió (guardar un hash por escena): cada llamada cuesta.
+- [x] No regenerar una frase cuyo texto no cambió (guardar un hash por escena): cada llamada cuesta.
 - [ ] Prueba de oído: la misma frase con dos o tres voces latinas, y Erich elige.
+      El comando ya está (`--try <id>,<id>`); falta la clave. Probado solo contra una respuesta
+      simulada: la primera llamada real hay que mirarla.
 - [ ] Anotar en `GUSTOS.md` la voz elegida y el tono.
 
 Costo: una locución son unos 400 caracteres, así que un video cuesta centavos. Lo que se paga es

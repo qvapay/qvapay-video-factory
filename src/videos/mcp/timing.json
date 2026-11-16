@@ -2,27 +2,39 @@
 	"voice": {
 		"hook": {
 			"file": "audio/mcp/vo-hook.wav",
-			"seconds": 5.29
+			"seconds": 5.29,
+			"provider": "system",
+			"hash": "2c405f6467f6b854"
 		},
 		"link": {
 			"file": "audio/mcp/vo-link.wav",
-			"seconds": 4.11
+			"seconds": 4.11,
+			"provider": "system",
+			"hash": "e5b9c070c3a20267"
 		},
 		"chat": {
 			"file": "audio/mcp/vo-chat.wav",
-			"seconds": 6.73
+			"seconds": 6.73,
+			"provider": "system",
+			"hash": "d559f08f2a003b64"
 		},
 		"safe": {
 			"file": "audio/mcp/vo-safe.wav",
-			"seconds": 4.37
+			"seconds": 4.37,
+			"provider": "system",
+			"hash": "ad5ea89a9baee956"
 		},
 		"steps": {
 			"file": "audio/mcp/vo-steps.wav",
-			"seconds": 4.2
+			"seconds": 4.2,
+			"provider": "system",
+			"hash": "0b84f6e1f130e025"
 		},
 		"cta": {
 			"file": "audio/mcp/vo-cta.wav",
-			"seconds": 3.39
+			"seconds": 3.39,
+			"provider": "system",
+			"hash": "15c6322bda8f21c6"
 		}
 	},
 	"music": null
