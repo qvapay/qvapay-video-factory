@@ -1,8 +1,9 @@
 // Agentes IA (MCP): conecta tu cuenta a un agente de IA. Solo lectura.
 // La locución de cada escena está en voice.json; `npm run audio mcp` la convierte en audio.
 import React from 'react'
+import { Locked1Duotone } from '@lineiconshq/free-icons'
 import { interpolate, useCurrentFrame } from 'remotion'
-import { Accent, Bubble, C, Card, Check, Figure, Headline, Logo, Rise, Step, Sub, UrlPill, clamp, useUnits } from '../../kit'
+import { Accent, Bubble, Button, C, Card, Check, Figure, Headline, IconTile, Logo, Rise, Step, Sub, clamp, useUnits } from '../../kit'
 
 // ---- 1. Gancho: alguien escribe la pregunta -------------------------------------------------
 const QUESTION = '¿Cuánto saldo tengo?'
@@ -99,19 +100,11 @@ const Chat = () => {
 }
 
 // ---- 4. Seguridad: solo lectura -------------------------------------------------------------
-const Lock = ({ size }) => (
-	<svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-		<rect x="4.5" y="10.5" width="15" height="10" rx="2.6" fill={C.primary} />
-		<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke={C.primarySoft} strokeWidth="2" strokeLinecap="round" />
-		<circle cx="12" cy="15.5" r="1.6" fill={C.bg} />
-	</svg>
-)
-
 const Safe = () => {
 	const { u, portrait } = useUnits()
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 * u }}>
-			<Rise at={2}><Lock size={13 * u} /></Rise>
+			<Rise at={2}><IconTile icon={Locked1Duotone} size={14} solid /></Rise>
 			<Headline at={10} size={portrait ? 9 : 7.6}>Solo lectura</Headline>
 			<div style={{ display: 'flex', flexDirection: 'column', gap: 2.2 * u, marginTop: u }}>
 				<Check at={26}>Consulta, pero no mueve tu dinero</Check>
@@ -142,7 +135,7 @@ const Cta = () => {
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4.4 * u }}>
 			<Rise at={2}><Logo size={26} /></Rise>
 			<Headline at={12} size={portrait ? 8 : 6.8}>Conecta tu agente hoy</Headline>
-			<UrlPill at={24}>qvapay.com/settings/agents</UrlPill>
+			<Button at={24}>qvapay.com/settings/agents</Button>
 			<Sub at={40} size={portrait ? 3.1 : 2.7}>Es el primer paso: iremos abriendo<br />más funciones poco a poco.</Sub>
 		</div>
 	)

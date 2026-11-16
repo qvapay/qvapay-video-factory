@@ -16,17 +16,45 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
   Erich lo pida.
 - Nunca se nombran proveedores (de energía, gift cards, verificación, IA…).
 - El saldo y los pagos internos se llaman QUSD.
-- Colores y fuente: los del producto, en `src/kit.jsx` (`C`). No se usan otros.
+- Se escribe «QvaPay», con la Q y la P en mayúscula.
 - Sin flechas de texto, sin degradados llamativos.
+
+## Sistema visual
+
+Los videos se ven como el producto en modo oscuro. Esto sale de barrer la web (`~/webs/qpweb`)
+y la app (`~/apps/QvaPay`) y quedarse con lo que las dos comparten; todo está hecho pieza en
+`src/kit.jsx`. Se usan las piezas, no se reinventan en cada video. Si el producto cambia de
+estilo, se cambia en el kit.
+
+- **Colores** (`C`): fondo `bg`, tarjeta `surface`, fila o elemento sobre tarjeta `elevation`.
+  El morado `primary` es solo para rellenos; el texto morado va en `primarySoft`. Sobre morado,
+  texto `white`. Verde `success` = dinero que entra o algo logrado; `danger` = dinero que sale
+  o un error; `warning` = pendiente. No se usan otros colores.
+- **Fuente**: Rubik. 400 para leer, 500 y 600 para destacar, 700 para titulares, 900 solo para
+  una cifra protagonista.
+- **Titulares** (`Headline`): cortos, en una o dos líneas; la palabra o la segunda línea que
+  importa va con `Accent`. `Eyebrow` para un rótulo encima, `Sub` para la frase de apoyo.
+- **Dinero**: `$1,234.56`, siempre dos decimales (`money()`). El saldo se llama QUSD. Cifra
+  grande con `Amount` (cuenta hasta su valor); dentro de una frase, `Figure`. Lo que entra, en
+  verde con `+`; lo que sale, en rojo con `-`.
+- **Tarjetas** (`Card`): superficie lisa con filo fino, sin sombra. Esquinas continuas.
+- **Botón** (`Button`): morado, texto blanco, esquinas continuas. Nunca píldora.
+- **Etiquetas** (`Chip`): redondas y teñidas. «Nuevo» con `dot`; estados con `tone`.
+- **Iconos**: los de la web, Lineicons en estilo Duotone (`@lineiconshq/free-icons`), siempre
+  dentro de `IconTile`. No se dibujan iconos a mano ni se usan emojis.
+- **Listas** (`Row`): icono redondo, título, detalle y la cifra a la derecha, como un
+  movimiento en la app. `Step` para pasos numerados, `Check` para una lista de ventajas.
+- **Fondo** (`Background`): oscuro, con la rejilla de puntos morados y un resplandor suave.
+  Lo pone `Video`; las escenas no ponen fondos propios.
 
 ## Logo
 
 El logo es el símbolo de los dos trazos (un check y una barra). Siempre se pone con `<Logo>` de
-`src/kit.jsx`, que lo dibuja en vector; nunca se redibuja, se deforma ni se sustituye por una
-imagen.
+`src/kit.jsx`, que lo dibuja en vector; nunca se redibuja, se deforma, se rota ni se le ponen
+sombras o efectos, y se le deja aire alrededor. La guía de marca de la web manda:
 
-- Sobre fondo oscuro o blanco: símbolo morado, `<Logo size={26} />`.
-- Sobre morado: símbolo blanco, `<Logo size={26} color={C.text} />`.
+- En video y sobre fondo oscuro o morado: símbolo blanco, `<Logo size={26} />`.
+- Sobre fondo claro: símbolo morado, `<Logo size={26} color={C.primary} />`.
 - Como icono de la app (cuadro morado con el símbolo blanco): `<Logo size={26} tile />`.
 - Va en el cierre de cada video, y donde haya que representar a QvaPay o la cuenta del usuario.
 - Los originales están en `brand/` (fondo morado y fondo blanco). El editable de Pixelmator
@@ -35,7 +63,7 @@ imagen.
 ## Cómo está armado
 
 - `src/kit.jsx`: lo común a todos los videos. Marca, unidades (`u`), animaciones (`Rise`),
-  texto (`Headline`, `Sub`), bloques (`Bubble`, `Step`, `Check`, `Card`, `UrlPill`, `Logo`),
+  texto, bloques (ver «Sistema visual»),
   la línea de tiempo y el audio. Una pieza que vaya a servir en otro video se escribe aquí.
 - `src/videos/<nombre>/index.jsx`: las escenas de un video. Exporta `scenes`
   (`[{ id, min, component }]`, `min` en fotogramas a 30 fps).
