@@ -19,6 +19,19 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
 - Colores y fuente: los del producto, en `src/kit.jsx` (`C`). No se usan otros.
 - Sin flechas de texto, sin degradados llamativos.
 
+## Logo
+
+El logo es el símbolo de los dos trazos (un check y una barra). Siempre se pone con `<Logo>` de
+`src/kit.jsx`, que lo dibuja en vector; nunca se redibuja, se deforma ni se sustituye por una
+imagen.
+
+- Sobre fondo oscuro o blanco: símbolo morado, `<Logo size={26} />`.
+- Sobre morado: símbolo blanco, `<Logo size={26} color={C.text} />`.
+- Como icono de la app (cuadro morado con el símbolo blanco): `<Logo size={26} tile />`.
+- Va en el cierre de cada video, y donde haya que representar a QvaPay o la cuenta del usuario.
+- Los originales están en `brand/` (fondo morado y fondo blanco). El editable de Pixelmator
+  queda en la máquina de Erich: `~/Qvapay/Rebranding/logo-qvapay.pxd`.
+
 ## Cómo está armado
 
 - `src/kit.jsx`: lo común a todos los videos. Marca, unidades (`u`), animaciones (`Rise`),
@@ -28,6 +41,7 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
   (`[{ id, min, component }]`, `min` en fotogramas a 30 fps).
 - `src/videos/<nombre>/voice.json`: la locución, una frase por escena (`{ id: "texto" }`).
 - `src/videos/<nombre>/timing.json`: lo genera `npm run audio`. No se edita a mano.
+- `brand/`: los logos originales en SVG. Son la referencia; los videos usan `<Logo>`.
 - `src/index.jsx`: registro. Cada video sale como `<nombre>-feed` (4:3) y `<nombre>-story` (9:16).
 
 Todo se mide en `u` (`useUnits()`), nunca en píxeles fijos: así el mismo diseño vale en los dos
