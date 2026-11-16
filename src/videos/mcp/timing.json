@@ -1,0 +1,29 @@
+{
+	"voice": {
+		"hook": {
+			"file": "audio/mcp/vo-hook.wav",
+			"seconds": 5.29
+		},
+		"link": {
+			"file": "audio/mcp/vo-link.wav",
+			"seconds": 4.11
+		},
+		"chat": {
+			"file": "audio/mcp/vo-chat.wav",
+			"seconds": 6.73
+		},
+		"safe": {
+			"file": "audio/mcp/vo-safe.wav",
+			"seconds": 4.37
+		},
+		"steps": {
+			"file": "audio/mcp/vo-steps.wav",
+			"seconds": 4.2
+		},
+		"cta": {
+			"file": "audio/mcp/vo-cta.wav",
+			"seconds": 3.39
+		}
+	},
+	"music": null
+}
