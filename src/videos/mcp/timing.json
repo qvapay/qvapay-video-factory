@@ -2,39 +2,39 @@
 	"voice": {
 		"hook": {
 			"file": "audio/mcp/vo-hook.wav",
-			"seconds": 5.29,
-			"provider": "system",
-			"hash": "2c405f6467f6b854"
+			"seconds": 2.48,
+			"provider": "elevenlabs",
+			"hash": "e0968cd23adf389d"
 		},
 		"link": {
 			"file": "audio/mcp/vo-link.wav",
-			"seconds": 4.11,
-			"provider": "system",
-			"hash": "e5b9c070c3a20267"
+			"seconds": 3.03,
+			"provider": "elevenlabs",
+			"hash": "bf313a587f805e63"
 		},
 		"chat": {
 			"file": "audio/mcp/vo-chat.wav",
-			"seconds": 6.73,
-			"provider": "system",
-			"hash": "d559f08f2a003b64"
+			"seconds": 4.99,
+			"provider": "elevenlabs",
+			"hash": "f06182183b14508e"
 		},
 		"safe": {
 			"file": "audio/mcp/vo-safe.wav",
-			"seconds": 4.37,
-			"provider": "system",
-			"hash": "ad5ea89a9baee956"
+			"seconds": 2.93,
+			"provider": "elevenlabs",
+			"hash": "70510d8d8b2ebe6b"
 		},
 		"steps": {
 			"file": "audio/mcp/vo-steps.wav",
-			"seconds": 4.2,
-			"provider": "system",
-			"hash": "0b84f6e1f130e025"
+			"seconds": 3.08,
+			"provider": "elevenlabs",
+			"hash": "035ab4a9b9f8044a"
 		},
 		"cta": {
 			"file": "audio/mcp/vo-cta.wav",
-			"seconds": 3.39,
-			"provider": "system",
-			"hash": "15c6322bda8f21c6"
+			"seconds": 3.81,
+			"provider": "elevenlabs",
+			"hash": "3ee509155d1e306b"
 		}
 	},
 	"music": null

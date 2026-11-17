@@ -18,11 +18,15 @@ además se aplica en `src/kit.jsx`. Una nota nueva que contradice a una vieja la
 
 ## Ritmo y duración
 
-(vacío)
+- 17 nov 2026: el video de Agentes IA quedó en 26 s con la voz de Kate (antes 33 s con el
+  borrador). Kate habla despacio, unos 13 caracteres por segundo: una frase de escena corta no
+  pasa de 40 caracteres.
 
 ## Voz y música
 
-(vacío)
+- 17 nov 2026: la voz de los videos es Kate, de la biblioteca de ElevenLabs («Bright, Friendly
+  & Positive», mujer joven, acento latinoamericano). La eligió «sin dudas» entre cuatro (Kate,
+  Gaby, Diego, Brian C). Tono: alegre y cercano. Está fijada en `voice.config.json`.
 
 ## Textos
 

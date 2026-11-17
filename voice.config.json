@@ -3,7 +3,7 @@
 		"voice": "Paulina"
 	},
 	"elevenlabs": {
-		"voiceId": "",
+		"voiceId": "qWWAqFomnJ99VwQLREfT",
 		"model": "eleven_multilingual_v2",
 		"settings": {
 			"stability": 0.5,

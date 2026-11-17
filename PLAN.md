@@ -38,17 +38,15 @@ La voz del sistema suena robotizada. Elegido como primera opción: ElevenLabs; s
 El proyecto de Jack Dorsey (Dessa, de Block) no sirve: es un modelo de conversación con lista
 de espera, no un servicio de locución.
 
-- [ ] Erich crea la cuenta y deja la clave en `~/webs/qvapay-videos/.env` (`ELEVENLABS_API_KEY=`).
+- [x] Erich crea la cuenta y deja la clave en `~/webs/qvapay-videos/.env` (`ELEVENLABS_API_KEY=`).
       Nunca una clave del proyecto de la app. `.env` va al `.gitignore`.
 - [x] `scripts/audio.mjs`: añadir `--provider elevenlabs` junto a la voz del sistema. Mismo
       contrato: un archivo por escena en `public/audio/<video>/vo-<escena>.wav` y `timing.json`.
 - [x] Guardar la voz elegida y sus ajustes en un `voice.config.json` del proyecto, para que todos
       los videos suenen igual.
 - [x] No regenerar una frase cuyo texto no cambió (guardar un hash por escena): cada llamada cuesta.
-- [ ] Prueba de oído: la misma frase con dos o tres voces latinas, y Erich elige.
-      El comando ya está (`--try <id>,<id>`); falta la clave. Probado solo contra una respuesta
-      simulada: la primera llamada real hay que mirarla.
-- [ ] Anotar en `GUSTOS.md` la voz elegida y el tono.
+- [x] Prueba de oído: la misma frase con dos o tres voces latinas, y Erich elige. Eligió Kate.
+- [x] Anotar en `GUSTOS.md` la voz elegida y el tono.
 
 Costo: una locución son unos 400 caracteres, así que un video cuesta centavos. Lo que se paga es
 el mínimo del plan. Preguntar antes de cualquier gasto.
@@ -64,7 +62,7 @@ el mínimo del plan. Preguntar antes de cualquier gasto.
 
 Con voz pasó de 25 a 33 segundos.
 
-- [ ] Acortar las frases de `src/videos/mcp/voice.json` para volver a unos 25 segundos.
+- [x] Acortar las frases de `src/videos/mcp/voice.json` para volver a unos 25 segundos. Quedó en 26.
 - [ ] Que lo que se ve en cada escena entre a tiempo con lo que dice la voz.
 - [ ] Erich revisa el movimiento: desde fotogramas sueltos no se puede juzgar.
 
