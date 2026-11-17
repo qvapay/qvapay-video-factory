@@ -21,9 +21,13 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
 
 ## Cómo está armado
 
-- `src/kit.jsx`: lo común a todos los videos. Marca, unidades (`u`), animaciones (`Rise`),
-  texto (`Headline`, `Sub`), bloques (`Bubble`, `Step`, `Check`, `Card`, `UrlPill`, `Logo`),
-  la línea de tiempo y el audio. Una pieza que vaya a servir en otro video se escribe aquí.
+- `src/kit.jsx`: lo común a todos los videos. Marca, unidades (`u`), animaciones (`Rise`,
+  `Flip`, `Rings`, `Burst`, `Count`), texto (`Headline`, que entra palabra a palabra, y `Sub`),
+  bloques (`Bubble`, `Step`, `Check`, `Card`, `UrlPill`, `Logo`, `Phone`), el fondo, los
+  cambios de escena, la línea de tiempo y el audio. Una pieza que vaya a servir en otro video
+  se escribe aquí.
+- `src/depth.jsx`: el fondo en 3D (three.js) por el que avanza la cámara. Necesita WebGL al
+  renderizar: lo activa `remotion.config.js`.
 - `src/videos/<nombre>/index.jsx`: las escenas de un video. Exporta `scenes`
   (`[{ id, min, component }]`, `min` en fotogramas a 30 fps).
 - `src/videos/<nombre>/voice.json`: la locución, una frase por escena (`{ id: "texto" }`).

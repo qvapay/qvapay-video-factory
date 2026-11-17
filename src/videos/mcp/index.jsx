@@ -1,47 +1,63 @@
 // Agentes IA (MCP): conecta tu cuenta a un agente de IA. Solo lectura.
 // La locución de cada escena está en voice.json; `npm run audio mcp` la convierte en audio.
 import React from 'react'
-import { interpolate, useCurrentFrame } from 'remotion'
-import { Accent, Bubble, C, Card, Check, Figure, Headline, Logo, Rise, Step, Sub, UrlPill, clamp, useUnits } from '../../kit'
+import { interpolate, spring, useCurrentFrame } from 'remotion'
+import { Accent, Bubble, Burst, C, Card, Check, Count, Figure, Headline, Logo, Phone, Rings, Rise, Step, Sub, UrlPill, clamp, useUnits } from '../../kit'
+
+// La cara del agente: se usa en la conexión, en la caja de la pregunta y en el teléfono
+const AgentMark = ({ size }) => {
+	const frame = useCurrentFrame()
+	const pulse = 1 + Math.sin(frame / 7) * 0.06
+	const blink = frame % 70 > 64 ? 0.15 : 1
+	const eye = { width: size * 0.13, height: size * 0.22 * blink, borderRadius: size, background: C.bg }
+	return (
+		<div style={{ width: size, height: size, borderRadius: '50%', background: `radial-gradient(circle at 35% 30%, ${C.primarySoft}, ${C.primary} 60%)`, transform: `scale(${pulse})`, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: size * 0.14, flexShrink: 0 }}>
+			<span style={eye} /><span style={eye} />
+		</div>
+	)
+}
 
 // ---- 1. Gancho: alguien escribe la pregunta -------------------------------------------------
 const QUESTION = '¿Cuánto saldo tengo?'
+const SENT = 34
 const Hook = () => {
 	const frame = useCurrentFrame()
-	const { u, portrait } = useUnits()
-	const typed = QUESTION.slice(0, Math.floor(interpolate(frame, [8, 44], [0, QUESTION.length], clamp)))
-	const caret = frame < 50 && Math.floor(frame / 8) % 2 === 0
+	const { u, portrait, fps } = useUnits()
+	const typed = QUESTION.slice(0, Math.floor(interpolate(frame, [6, 30], [0, QUESTION.length], clamp)))
+	const caret = frame < SENT && Math.floor(frame / 7) % 2 === 0
+	const land = spring({ frame, fps, config: { damping: 15, stiffness: 60 } })
+	const sent = spring({ frame: frame - SENT, fps, config: { damping: 10, stiffness: 200, mass: 0.5 } })
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 * u, width: '100%' }}>
-			<Rise at={0} style={{ width: portrait ? '100%' : '78%' }}>
-				<Card style={{ borderRadius: 5 * u, padding: `${3.2 * u}px ${4 * u}px`, fontSize: (portrait ? 5.4 : 5) * u, fontWeight: 500, color: C.text, minHeight: 7 * u, display: 'flex', alignItems: 'center' }}>
-					<span>{typed}</span>
-					<span style={{ width: 0.4 * u, height: 5 * u, marginLeft: 0.6 * u, background: caret ? C.primarySoft : 'transparent' }} />
-				</Card>
-			</Rise>
-			<Headline at={52} size={portrait ? 9.5 : 8.4}>Pregúntaselo a <Accent>tu IA</Accent></Headline>
+			<div style={{ width: portrait ? '100%' : '78%', perspective: 110 * u }}>
+				<div style={{ position: 'relative', opacity: interpolate(frame, [0, 8], [0, 1], clamp), transform: `translateY(${(1 - land) * 12 * u}px) rotateX(${interpolate(land, [0, 1], [58, 9])}deg) rotateY(${Math.sin(frame / 28) * 4}deg) scale(${1 + 0.04 * Math.sin(Math.min(sent, 1) * Math.PI)})` }}>
+					<Card style={{ borderRadius: 5 * u, padding: `${2.6 * u}px ${2.6 * u}px ${2.6 * u}px ${4 * u}px`, fontSize: (portrait ? 5.2 : 5) * u, fontWeight: 500, color: C.text, display: 'flex', alignItems: 'center', boxShadow: `0 ${3 * u}px ${8 * u}px rgba(0,0,0,0.45), 0 0 ${10 * u}px rgba(103,89,239,${0.2 + 0.4 * Math.min(sent, 1)})` }}>
+						<span>{typed}</span>
+						<span style={{ width: 0.4 * u, height: 5 * u, marginLeft: 0.6 * u, background: caret ? C.primarySoft : 'transparent' }} />
+						<span style={{ flex: 1 }} />
+						<AgentMark size={8 * u} />
+					</Card>
+					<Rings at={SENT} size={portrait ? 80 : 90} count={2} />
+				</div>
+			</div>
+			<Headline at={SENT + 2} size={portrait ? 9.5 : 8.4}>Pregúntaselo a <Accent>tu IA</Accent></Headline>
 		</div>
 	)
 }
 
 // ---- 2. La conexión: tu cuenta y tu agente --------------------------------------------------
-const Node = ({ at, label, children }) => {
-	const { u } = useUnits()
-	return (
-		<Rise at={at} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.6 * u }}>
-			<Card style={{ width: 19 * u, height: 19 * u, borderRadius: 5 * u, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{children}</Card>
-			<div style={{ fontSize: 2.5 * u, fontWeight: 500, color: C.muted }}>{label}</div>
-		</Rise>
-	)
-}
-
-const AgentMark = ({ size }) => {
+const LINKED = 40
+const Node = ({ at, label, turn, children }) => {
 	const frame = useCurrentFrame()
-	const pulse = 1 + Math.sin(frame / 7) * 0.06
-	const eye = { width: size * 0.13, height: size * 0.22, borderRadius: size, background: C.bg }
+	const { u, fps } = useUnits()
+	const p = spring({ frame: frame - at, fps, config: { damping: 14, stiffness: 80 } })
+	const lit = interpolate(frame, [LINKED, LINKED + 8, LINKED + 40], [0, 1, 0.35], clamp)
 	return (
-		<div style={{ width: size, height: size, borderRadius: '50%', background: `radial-gradient(circle at 35% 30%, ${C.primarySoft}, ${C.primary} 60%)`, transform: `scale(${pulse})`, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: size * 0.14 }}>
-			<span style={eye} /><span style={eye} />
+		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.8 * u, perspective: 80 * u, opacity: interpolate(frame - at, [0, 8], [0, 1], clamp) }}>
+			<div style={{ transform: `translateY(${Math.sin(frame / 22 + turn) * 0.8 * u}px) rotateY(${interpolate(p, [0, 1], [turn * 80, turn * 24])}deg) rotateX(${6 + Math.cos(frame / 30) * 3}deg) scale(${0.5 + 0.5 * p})` }}>
+				<Card style={{ width: 21 * u, height: 21 * u, borderRadius: 5.5 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', borderColor: `rgba(123,255,177,${0.18 + 0.6 * lit})`, boxShadow: `0 ${3 * u}px ${8 * u}px rgba(0,0,0,0.5), 0 0 ${9 * u}px rgba(103,89,239,${0.25 + 0.45 * lit})` }}>{children}</Card>
+			</div>
+			<div style={{ fontSize: 2.6 * u, fontWeight: 500, color: C.muted }}>{label}</div>
 		</div>
 	)
 }
@@ -49,71 +65,138 @@ const AgentMark = ({ size }) => {
 const Link = () => {
 	const frame = useCurrentFrame()
 	const { u, portrait } = useUnits()
-	const grow = interpolate(frame, [26, 50], [0, 1], clamp)
-	const dot = ((frame - 50) % 40) / 40
-	const wire = portrait ? 16 * u : 22 * u
+	const grow = interpolate(frame, [22, LINKED], [0, 1], clamp)
+	const wire = portrait ? 15 * u : 22 * u
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 * u }}>
-			<div style={{ display: 'flex', alignItems: 'flex-start', gap: 2 * u }}>
-				<Node at={4} label="Tu cuenta"><Logo size={15} /></Node>
-				<div style={{ width: wire, height: 19 * u, display: 'flex', alignItems: 'center', position: 'relative' }}>
-					<div style={{ width: wire * grow, height: 0.35 * u, borderRadius: u, background: `linear-gradient(90deg, ${C.primary}, ${C.primarySoft})` }} />
-					{frame > 50 && <div style={{ position: 'absolute', left: wire * dot - 0.8 * u, width: 1.6 * u, height: 1.6 * u, borderRadius: '50%', background: C.success, boxShadow: `0 0 ${2 * u}px ${C.success}` }} />}
+			<div style={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 * u }}>
+				<Node at={2} turn={1} label="Tu cuenta"><Logo size={16} /></Node>
+				<div style={{ width: wire, height: 21 * u, display: 'flex', alignItems: 'center', position: 'relative' }}>
+					<div style={{ width: wire * grow, height: 0.4 * u, borderRadius: u, background: C.primarySoft, boxShadow: `0 0 ${1.6 * u}px ${C.primary}` }} />
+					{[0, 1, 2].map(i => {
+						const t = ((frame - LINKED - i * 11) % 33) / 33
+						if (frame < LINKED + i * 11) return null
+						const back = i === 1 // uno de los pulsos vuelve: el agente pregunta y la cuenta responde
+						return <div key={i} style={{ position: 'absolute', left: wire * (back ? 1 - t : t) - 0.8 * u, width: 1.6 * u, height: 1.6 * u, borderRadius: '50%', background: back ? C.primarySoft : C.success, boxShadow: `0 0 ${2 * u}px ${back ? C.primarySoft : C.success}`, opacity: Math.sin(t * Math.PI) }} />
+					})}
+					<Rings at={LINKED} size={50} color={C.success} />
+					<Burst at={LINKED} reach={20} count={16} seed="link" />
 				</div>
-				<Node at={14} label="Tu agente de IA"><AgentMark size={10 * u} /></Node>
+				<Node at={10} turn={-1} label="Tu agente de IA"><AgentMark size={11 * u} /></Node>
 			</div>
-			<Headline at={40} size={portrait ? 7.4 : 6.4}>Tu QvaPay ya habla<br />con tu agente de IA</Headline>
+			<Headline at={26} size={portrait ? 7.4 : 6.4}>Tu QvaPay ya habla<br />con tu agente de IA</Headline>
 		</div>
 	)
 }
 
 // ---- 3. Demostración: pregunta, consulta, respuesta -----------------------------------------
-const ToolChip = ({ at, until, name }) => {
+const ToolChip = ({ at, until, name, size }) => {
 	const frame = useCurrentFrame()
-	const { u, portrait } = useUnits()
-	if (frame < at || frame > until) return null
+	const { u } = useUnits()
+	if (frame < at || frame >= until) return null
 	const dots = '.'.repeat(1 + (Math.floor((frame - at) / 6) % 3))
 	return (
 		<Rise at={at} distance={1.5} style={{ alignSelf: 'flex-start' }}>
-			<div style={{ display: 'flex', alignItems: 'center', gap: 1.2 * u, fontSize: (portrait ? 2.7 : 2.3) * u, fontWeight: 500, color: C.muted, fontFamily: 'ui-monospace, Menlo, monospace', padding: `${0.6 * u}px ${0.4 * u}px` }}>
-				<span style={{ width: 1.2 * u, height: 1.2 * u, borderRadius: '50%', background: C.success }} />
+			<div style={{ display: 'flex', alignItems: 'center', gap: 0.5 * size * u, fontSize: 0.72 * size * u, fontWeight: 500, color: C.muted, fontFamily: 'ui-monospace, Menlo, monospace', padding: `${0.25 * size * u}px ${0.15 * size * u}px` }}>
+				<span style={{ width: 0.4 * size * u, height: 0.4 * size * u, borderRadius: '50%', background: C.success, opacity: 0.5 + 0.5 * Math.sin(frame / 3) }} />
 				consultando {name}{dots}
 			</div>
 		</Rise>
 	)
 }
 
+// Lo que se le puede preguntar: se enciende cuando la voz lo nombra
+const Topic = ({ at, children }) => {
+	const frame = useCurrentFrame()
+	const { u, portrait, fps } = useUnits()
+	const p = spring({ frame: frame - at, fps, config: { damping: 11, stiffness: 170, mass: 0.6 } })
+	const flash = interpolate(frame - at, [0, 8, 30], [0, 1, 0], clamp)
+	return (
+		<div style={{ opacity: interpolate(frame - at, [0, 5], [0, 1], clamp), transform: `scale(${0.5 + 0.5 * p})` }}>
+			<Card style={{ display: 'flex', alignItems: 'center', gap: 1.4 * u, borderRadius: 4 * u, padding: `${1.5 * u}px ${2.6 * u}px`, fontSize: (portrait ? 3.3 : 3.4) * u, fontWeight: 700, color: C.text, whiteSpace: 'nowrap', boxShadow: `0 0 ${5 * u}px rgba(103,89,239,${0.6 * flash})` }}>
+				<span style={{ width: 1.5 * u, height: 1.5 * u, borderRadius: '50%', background: C.success }} />
+				{children}
+			</Card>
+		</div>
+	)
+}
+
 const Chat = () => {
 	const { u, portrait } = useUnits()
+	const s = portrait ? 3.4 : 2.5 // tamaño del texto dentro del teléfono, en u
+	const phone = (
+		<Phone at={0} width={portrait ? 66 : 44} height={portrait ? 82 : 68}>
+			<div style={{ display: 'flex', alignItems: 'center', gap: 0.7 * s * u, padding: `${0.6 * s * u}px ${0.9 * s * u}px`, borderBottom: `${0.12 * u}px solid ${C.border}`, flexShrink: 0 }}>
+				<AgentMark size={1.9 * s * u} />
+				<div>
+					<div style={{ fontSize: 0.95 * s * u, fontWeight: 700, color: C.text }}>Tu agente de IA</div>
+					<div style={{ fontSize: 0.7 * s * u, fontWeight: 500, color: C.success }}>Conectado a QvaPay</div>
+				</div>
+			</div>
+			<div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0.5 * s * u, padding: `${0.8 * s * u}px ${0.75 * s * u}px` }}>
+				<Bubble at={14} size={s} mine>¿Cuánto saldo tengo?</Bubble>
+				<ToolChip at={28} until={52} size={s} name="qvapay_balance" />
+				<Bubble at={52} size={s}>Tienes <Figure><Count at={54} to={248.5} prefix="$" suffix=" QUSD" /></Figure> disponibles.</Bubble>
+				<Bubble at={84} size={s} mine>¿Qué me entró esta semana?</Bubble>
+				<ToolChip at={98} until={122} size={s} name="qvapay_transactions" />
+				<Bubble at={122} size={s}>Recibiste 3 pagos: <Figure><Count at={124} to={120} prefix="+$" suffix=" QUSD" /></Figure></Bubble>
+			</div>
+			<div style={{ fontSize: 0.66 * s * u, fontWeight: 500, color: C.muted, textAlign: 'center', padding: `${0.7 * s * u}px`, flexShrink: 0 }}>Cifras de ejemplo</div>
+		</Phone>
+	)
+	const title = <Headline at={8} size={portrait ? 6.4 : 5.8}>Pregunta con<br /><Accent>tus palabras</Accent></Headline>
+	const topics = <><Topic at={32}>Tu saldo</Topic><Topic at={62}>Tus movimientos</Topic><Topic at={92}>Tasas del mercado</Topic></>
+	if (portrait) {
+		return (
+			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3.4 * u, width: '100%' }}>
+				{title}
+				{phone}
+				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.6 * u }}>{topics}</div>
+			</div>
+		)
+	}
 	return (
-		<div style={{ width: portrait ? '100%' : '74%', display: 'flex', flexDirection: 'column', gap: 1.8 * u }}>
-			<Bubble at={4} mine>¿Cuánto saldo tengo?</Bubble>
-			<ToolChip at={22} until={50} name="qvapay_balance" />
-			<Bubble at={50}>Tienes <Figure>$248.50 QUSD</Figure> disponibles.</Bubble>
-			<Bubble at={92} mine>¿Qué me entró esta semana?</Bubble>
-			<ToolChip at={110} until={138} name="qvapay_transactions" />
-			<Bubble at={138}>Recibiste 3 pagos: <Figure>+$120.00 QUSD</Figure></Bubble>
-			<Sub at={176} size={portrait ? 3 : 2.6} style={{ marginTop: 2 * u }}>También precios y tasas del mercado P2P</Sub>
+		<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9 * u, width: '100%' }}>
+			{phone}
+			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4.4 * u }}>
+				{title}
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.8 * u }}>{topics}</div>
+			</div>
 		</div>
 	)
 }
 
 // ---- 4. Seguridad: solo lectura -------------------------------------------------------------
-const Lock = ({ size }) => (
-	<svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-		<rect x="4.5" y="10.5" width="15" height="10" rx="2.6" fill={C.primary} />
-		<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke={C.primarySoft} strokeWidth="2" strokeLinecap="round" />
-		<circle cx="12" cy="15.5" r="1.6" fill={C.bg} />
-	</svg>
-)
+// El candado llega abierto y se cierra; un aro se dibuja a su alrededor
+const CLOSED = 14
+const Lock = ({ size }) => {
+	const frame = useCurrentFrame()
+	const { u, fps } = useUnits()
+	const arrive = spring({ frame, fps, config: { damping: 12, stiffness: 120, mass: 0.7 } })
+	const shut = spring({ frame: frame - CLOSED, fps, config: { damping: 9, stiffness: 240, mass: 0.5 } })
+	const ring = interpolate(frame, [4, 30], [0, 1], clamp)
+	return (
+		<div style={{ position: 'relative', width: size * u, height: size * u, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${0.4 + 0.6 * arrive})`, opacity: interpolate(frame, [0, 6], [0, 1], clamp) }}>
+			<svg width={size * u} height={size * u} viewBox="0 0 100 100" style={{ position: 'absolute', transform: 'rotate(-90deg)' }}>
+				<circle cx="50" cy="50" r="46" fill="rgba(103,89,239,0.12)" stroke={C.primarySoft} strokeWidth="2.2" strokeLinecap="round" strokeDasharray="289" strokeDashoffset={289 * (1 - ring)} />
+			</svg>
+			<svg width={size * 0.56 * u} height={size * 0.56 * u} viewBox="0 -4 24 28" fill="none">
+				<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke={C.primarySoft} strokeWidth="2" strokeLinecap="round" transform={`translate(0 ${(1 - shut) * -3.4})`} />
+				<rect x="4.5" y="10.5" width="15" height="10" rx="2.6" fill={C.primary} />
+				<circle cx="12" cy="15.5" r="1.6" fill={C.bg} />
+			</svg>
+			<Rings at={CLOSED + 2} size={size * 2.1} count={2} />
+		</div>
+	)
+}
 
 const Safe = () => {
 	const { u, portrait } = useUnits()
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 * u }}>
-			<Rise at={2}><Lock size={13 * u} /></Rise>
+		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3.6 * u }}>
+			<Lock size={portrait ? 26 : 22} />
 			<Headline at={10} size={portrait ? 9 : 7.6}>Solo lectura</Headline>
-			<div style={{ display: 'flex', flexDirection: 'column', gap: 2.2 * u, marginTop: u }}>
+			<div style={{ display: 'flex', flexDirection: 'column', gap: 2.2 * u, marginTop: 0.6 * u }}>
 				<Check at={26}>Consulta, pero no mueve tu dinero</Check>
 				<Check at={38}>No ve tu PIN ni tus datos personales</Check>
 				<Check at={50}>Lo desconectas cuando quieras</Check>
@@ -128,22 +211,28 @@ const Steps = () => {
 	return (
 		<div style={{ width: portrait ? '100%' : '70%', display: 'flex', flexDirection: 'column', gap: 2.2 * u }}>
 			<Headline at={0} size={portrait ? 6.6 : 5.6} style={{ marginBottom: 2.4 * u }}>Lo conectas en un minuto</Headline>
-			<Step at={14} n="1">Entra a Ajustes, Agentes IA</Step>
-			<Step at={28} n="2">Crea un token y cópialo</Step>
-			<Step at={42} n="3">Pégalo en tu agente</Step>
+			<Step at={16} n="1">Entra a Ajustes, Agentes IA</Step>
+			<Step at={34} n="2">Crea un token y cópialo</Step>
+			<Step at={52} n="3">Pégalo en tu agente</Step>
 		</div>
 	)
 }
 
 // ---- 6. Cierre ------------------------------------------------------------------------------
 const Cta = () => {
-	const { u, portrait } = useUnits()
+	const frame = useCurrentFrame()
+	const { u, portrait, fps } = useUnits()
+	const pop = spring({ frame: frame - 2, fps, config: { damping: 9, stiffness: 130, mass: 0.8 } })
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4.4 * u }}>
-			<Rise at={2}><Logo size={26} /></Rise>
+			<div style={{ position: 'relative' }}>
+				<Rings at={6} size={70} />
+				<Burst at={5} reach={38} count={30} seed="cta" />
+				<div style={{ opacity: interpolate(frame, [2, 8], [0, 1], clamp), transform: `scale(${0.3 + 0.7 * pop}) rotate(${(1 - pop) * -18}deg)` }}><Logo size={26} /></div>
+			</div>
 			<Headline at={12} size={portrait ? 8 : 6.8}>Conecta tu agente hoy</Headline>
-			<UrlPill at={24}>qvapay.com/settings/agents</UrlPill>
-			<Sub at={40} size={portrait ? 3.1 : 2.7}>Es el primer paso: iremos abriendo<br />más funciones poco a poco.</Sub>
+			<UrlPill at={26}>qvapay.com/settings/agents</UrlPill>
+			<Sub at={42} size={portrait ? 3.1 : 2.7}>Es el primer paso: iremos abriendo<br />más funciones poco a poco.</Sub>
 		</div>
 	)
 }
@@ -152,8 +241,8 @@ const Cta = () => {
 export const scenes = [
 	{ id: 'hook', min: 95, component: Hook },
 	{ id: 'link', min: 110, component: Link },
-	{ id: 'chat', min: 225, component: Chat },
+	{ id: 'chat', min: 195, component: Chat },
 	{ id: 'safe', min: 100, component: Safe },
-	{ id: 'steps', min: 100, component: Steps },
+	{ id: 'steps', min: 105, component: Steps },
 	{ id: 'cta', min: 135, component: Cta },
 ]
