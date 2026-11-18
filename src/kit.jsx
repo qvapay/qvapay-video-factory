@@ -316,12 +316,15 @@ const SceneFrame = ({ duration, first, children }) => {
 // Música de fondo: entra y sale con fundido, y baja mientras alguien habla.
 const MUSIC_FULL = 0.38
 const MUSIC_UNDER_VOICE = 0.1
+// Fotogramas que tarda en bajar y subir. Más largo que el silencio entre dos escenas, para que
+// ahí la música solo asome y no dé un salto de volumen en cada cambio.
+const DUCK = 18
 const Music = ({ timeline }) => {
 	const spans = timeline.items.filter(item => item.voice).map(item => [item.from + VOICE_LEAD, item.from + VOICE_LEAD + Math.ceil(item.voice.seconds * FPS)])
 	const volume = (frame) => {
 		const edges = interpolate(frame, [0, 20, timeline.duration - 30, timeline.duration], [0, 1, 1, 0], clamp)
-		// Qué tan cerca está la voz: 1 dentro de una locución, 0 a más de 10 fotogramas
-		const near = Math.max(0, ...spans.map(([start, end]) => interpolate(frame, [start - 10, start, end, end + 10], [0, 1, 1, 0], clamp)))
+		// Qué tan cerca está la voz: 1 dentro de una locución, 0 a más de DUCK fotogramas
+		const near = Math.max(0, ...spans.map(([start, end]) => interpolate(frame, [start - DUCK, start, end, end + DUCK], [0, 1, 1, 0], clamp)))
 		return edges * (MUSIC_FULL - (MUSIC_FULL - MUSIC_UNDER_VOICE) * near)
 	}
 	return <Audio src={staticFile(timeline.music)} volume={volume} loop />

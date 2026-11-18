@@ -30,6 +30,10 @@ además se aplica en `src/kit.jsx`. Una nota nueva que contradice a una vieja la
 - 17 nov 2026: la voz de los videos es Kate, de la biblioteca de ElevenLabs («Bright, Friendly
   & Positive», mujer joven, acento latinoamericano). La eligió «sin dudas» entre cuatro (Kate,
   Gaby, Diego, Brian C). Tono: alegre y cercano. Está fijada en `voice.config.json`.
+- 17 nov 2026: la música de los videos es `public/music/default.mp3`, la pista «energía
+  anuncio» («obviamente», entre tres: electrónica suave, pop latino y esta). Generada con
+  ElevenLabs Music con la cuenta de QvaPay (plan Starter, que incluye licencia comercial para
+  música). Estilo pedido: pop electrónico enérgico de anuncio, unos 122 bpm, sin voz.
 
 ## Textos
 

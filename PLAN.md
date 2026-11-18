@@ -56,7 +56,7 @@ el mínimo del plan. Preguntar antes de cualquier gasto.
 - [ ] Erich elige una pista con licencia para uso comercial y la deja en `public/music/default.mp3`.
 - [ ] Anotar en `GUSTOS.md` de dónde salió y su licencia.
 - [ ] Ajustar los dos volúmenes (`MUSIC_FULL` y `MUSIC_UNDER_VOICE` en `src/kit.jsx`) escuchando.
-- [ ] Normalizar el volumen final del video con ffmpeg para que todos los videos suenen parejo.
+- [x] Normalizar el volumen final del video con ffmpeg para que todos los videos suenen parejo.
 
 ### 3. Ritmo del video de Agentes IA
 

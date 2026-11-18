@@ -4,13 +4,15 @@
 //   npm run video <video> -- --mute     además, una versión sin sonido de cada formato
 //   npm run video <video> -- --only story
 import { execFileSync } from 'node:child_process'
-import { mkdirSync } from 'node:fs'
+import { mkdirSync, rmSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url))
 // Los mismos formatos que FORMATS en src/kit.jsx
 const FORMATS = { feed: 'feed-4x3', story: 'story-9x16' }
+
+const LOUDNESS = -14 // LUFS
 
 const args = process.argv.slice(2)
 const video = args.find(arg => !arg.startsWith('--'))
@@ -21,7 +23,13 @@ const alsoMute = args.includes('--mute')
 mkdirSync(path.join(ROOT, 'out'), { recursive: true })
 const render = (format, mute) => {
 	const out = path.join('out', `${video}-${FORMATS[format]}${mute ? '-sin-sonido' : ''}.mp4`)
-	execFileSync('npx', ['remotion', 'render', 'src/index.jsx', `${video}-${format}`, out, '--log=error', `--props=${JSON.stringify({ mute })}`], { cwd: ROOT, stdio: 'inherit' })
+	const raw = mute ? out : out.replace(/\.mp4$/, '.raw.mp4')
+	execFileSync('npx', ['remotion', 'render', 'src/index.jsx', `${video}-${format}`, raw, '--log=error', `--props=${JSON.stringify({ mute })}`], { cwd: ROOT, stdio: 'inherit' })
+	if (!mute) {
+		// Todos los videos salen al mismo volumen, el habitual en redes. La imagen no se toca.
+		execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', raw, '-c:v', 'copy', '-af', `loudnorm=I=${LOUDNESS}:TP=-1.5:LRA=11`, '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', out], { cwd: ROOT, stdio: 'inherit' })
+		rmSync(path.join(ROOT, raw))
+	}
 	console.log(`listo: ${out}`)
 }
 
