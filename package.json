@@ -8,9 +8,12 @@
     "video": "node scripts/render.mjs"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.17.10",
     "@remotion/cli": "4.0.290",
+    "@remotion/three": "^4.0.290",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "remotion": "4.0.290"
+    "remotion": "4.0.290",
+    "three": "^0.170.0"
   }
 }
