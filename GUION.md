@@ -11,7 +11,7 @@ Saca los datos del código y de las notas de versión, no de memoria. Si no encu
 escribe «NO LO SÉ» en su sitio: no inventes cifras, tasas, límites, pasos ni direcciones.
 
 REGLAS DEL GUION
-- Público: Latinoamérica, español neutro, de tú. No se menciona Cuba.
+- Público: Latinoamérica, español neutro, de tú.
 - No se nombra ningún proveedor (energía, gift cards, verificación, IA…).
 - El saldo y los pagos internos se llaman QUSD.
 - Solo se promete lo que ya está disponible para todos los usuarios.

@@ -14,8 +14,7 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
 
 ## Reglas de marca
 
-- Habla para Latinoamérica, en español neutro. No se menciona Cuba en piezas públicas salvo que
-  Erich lo pida.
+- Habla para Latinoamérica, en español neutro.
 - Nunca se nombran proveedores (de energía, gift cards, verificación, IA…).
 - El saldo y los pagos internos se llaman QUSD.
 - Colores y fuente: los del producto, en `src/kit.jsx` (`C`). No se usan otros.

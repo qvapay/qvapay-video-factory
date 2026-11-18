@@ -33,4 +33,4 @@ además se aplica en `src/kit.jsx`. Una nota nueva que contradice a una vieja la
 
 ## Textos
 
-(vacío)
+- 17 nov 2026: no hay problema con mencionar Cuba en los videos; se quitó esa regla.
