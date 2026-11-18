@@ -17,7 +17,7 @@ además se aplica en `src/kit.jsx`. Una nota nueva que contradice a una vieja la
 - 17 nov 2026: la primera versión, vista ya con voz, le pareció «pobre». Pidió «más pacotilla
   y más blender»: más adorno, más movimiento y 3D, «cosas bestiales». Desde entonces el kit
   trae fondo en 3D, teléfono en 3D, titulares palabra a palabra, chispas y cambios de escena
-  con cámara. Falta su opinión sobre esa versión.
+  con cámara. Esa versión le pareció que «mejoró bastante».
 
 ## Ritmo y duración
 
