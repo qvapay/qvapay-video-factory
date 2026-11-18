@@ -1,4 +1,4 @@
-# Brief de un video de QvaPay
+# Guion de un video de QvaPay: plantilla
 
 Se le pasa a un agente que conozca la función (el del repo de la app). Lo devuelve relleno y con
 eso se arma el video en la fábrica.

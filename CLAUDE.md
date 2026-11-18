@@ -6,6 +6,8 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
 ## Antes de hacer un video
 
 1. Lee `GUSTOS.md`. Son las preferencias de Erich y mandan sobre cualquier costumbre.
+   El guion llega relleno según la plantilla de `GUION.md`; si Erich solo da el tema, se le
+   ofrece esa plantilla para pasarla al agente que conozca la función.
 2. Si falta un dato (dirección exacta, pasos, precios, límites), pregúntalo. Nunca inventes
    cifras, tasas ni límites; las cifras de un ejemplo en pantalla se avisan como ejemplo.
 3. Comprueba que lo que el video promete ya está disponible para los usuarios.
