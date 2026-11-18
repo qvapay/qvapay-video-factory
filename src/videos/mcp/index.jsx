@@ -2,7 +2,7 @@
 // La locución de cada escena está en voice.json; `npm run audio mcp` la convierte en audio.
 import React from 'react'
 import { interpolate, spring, useCurrentFrame } from 'remotion'
-import { Accent, Bubble, Burst, C, Card, Check, Count, Figure, Headline, Logo, Phone, Rings, Rise, Step, Sub, UrlPill, clamp, useUnits } from '../../kit'
+import { Accent, Bubble, Burst, C, Card, Check, Chip, Count, Figure, Headline, Logo, Phone, Rings, Rise, Step, Sub, UrlPill, clamp, useUnits } from '../../kit'
 
 // La cara del agente: se usa en la conexión, en la caja de la pregunta y en el teléfono
 const AgentMark = ({ size }) => {
@@ -105,22 +105,6 @@ const ToolChip = ({ at, until, name, size }) => {
 	)
 }
 
-// Lo que se le puede preguntar: se enciende cuando la voz lo nombra
-const Topic = ({ at, children }) => {
-	const frame = useCurrentFrame()
-	const { u, portrait, fps } = useUnits()
-	const p = spring({ frame: frame - at, fps, config: { damping: 11, stiffness: 170, mass: 0.6 } })
-	const flash = interpolate(frame - at, [0, 8, 30], [0, 1, 0], clamp)
-	return (
-		<div style={{ opacity: interpolate(frame - at, [0, 5], [0, 1], clamp), transform: `scale(${0.5 + 0.5 * p})` }}>
-			<Card style={{ display: 'flex', alignItems: 'center', gap: 1.4 * u, borderRadius: 4 * u, padding: `${1.5 * u}px ${2.6 * u}px`, fontSize: (portrait ? 3.3 : 3.4) * u, fontWeight: 700, color: C.text, whiteSpace: 'nowrap', boxShadow: `0 0 ${5 * u}px rgba(103,89,239,${0.6 * flash})` }}>
-				<span style={{ width: 1.5 * u, height: 1.5 * u, borderRadius: '50%', background: C.success }} />
-				{children}
-			</Card>
-		</div>
-	)
-}
-
 const Chat = () => {
 	const { u, portrait } = useUnits()
 	const s = portrait ? 3.4 : 2.5 // tamaño del texto dentro del teléfono, en u
@@ -145,7 +129,7 @@ const Chat = () => {
 		</Phone>
 	)
 	const title = <Headline at={8} size={portrait ? 6.4 : 5.8}>Pregunta con<br /><Accent>tus palabras</Accent></Headline>
-	const topics = <><Topic at={32}>Tu saldo</Topic><Topic at={62}>Tus movimientos</Topic><Topic at={92}>Tasas del mercado</Topic></>
+	const topics = <><Chip at={32}>Tu saldo</Chip><Chip at={62}>Tus movimientos</Chip><Chip at={92}>Tasas del mercado</Chip></>
 	if (portrait) {
 		return (
 			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3.4 * u, width: '100%' }}>

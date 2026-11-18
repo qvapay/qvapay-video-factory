@@ -157,6 +157,34 @@ export const Bubble = ({ at, mine, size, children }) => {
 	)
 }
 
+// Etiqueta con punto que salta a su sitio y se enciende un momento: para listas cortas que
+// la voz va nombrando
+export const Chip = ({ at, children }) => {
+	const frame = useCurrentFrame()
+	const { u, portrait, fps } = useUnits()
+	const p = spring({ frame: frame - at, fps, config: { damping: 11, stiffness: 170, mass: 0.6 } })
+	const flash = interpolate(frame - at, [0, 8, 30], [0, 1, 0], clamp)
+	return (
+		<div style={{ opacity: interpolate(frame - at, [0, 5], [0, 1], clamp), transform: `scale(${0.5 + 0.5 * p})` }}>
+			<Card style={{ display: 'flex', alignItems: 'center', gap: 1.4 * u, borderRadius: 4 * u, padding: `${1.5 * u}px ${2.6 * u}px`, fontSize: (portrait ? 3.3 : 3.4) * u, fontWeight: 700, color: C.text, whiteSpace: 'nowrap', boxShadow: `0 0 ${5 * u}px rgba(103,89,239,${0.6 * flash})` }}>
+				<span style={{ width: 1.5 * u, height: 1.5 * u, borderRadius: '50%', background: C.success }} />
+				{children}
+			</Card>
+		</div>
+	)
+}
+
+// Etiqueta de aviso (una fecha límite, «Nuevo»): contorno con un latido suave
+export const Tag = ({ at = 0, size = 3, children }) => {
+	const frame = useCurrentFrame()
+	const { u, fps } = useUnits()
+	const p = spring({ frame: frame - at, fps, config: { damping: 10, stiffness: 180, mass: 0.6 } })
+	const beat = 0.5 + 0.5 * Math.sin((frame - at) / 6)
+	return (
+		<div style={{ opacity: interpolate(frame - at, [0, 5], [0, 1], clamp), transform: `scale(${0.5 + 0.5 * p})`, border: `${0.25 * u}px solid ${C.success}`, color: C.success, background: 'rgba(123,255,177,0.1)', borderRadius: 4 * u, padding: `${0.3 * size * u}px ${0.8 * size * u}px`, fontSize: size * u, fontWeight: 800, whiteSpace: 'nowrap', boxShadow: `0 0 ${(2 + 3 * beat) * u}px rgba(123,255,177,${0.15 + 0.25 * beat})` }}>{children}</div>
+	)
+}
+
 // Paso numerado: se levanta en 3D y su número se enciende un momento al llegar
 export const Step = ({ at, n, children }) => {
 	const frame = useCurrentFrame()

@@ -1,0 +1,41 @@
+{
+	"voice": {
+		"hook": {
+			"file": "audio/recargas/vo-hook.wav",
+			"seconds": 3.3,
+			"provider": "system",
+			"hash": "f8b5ccfb1c312011"
+		},
+		"what": {
+			"file": "audio/recargas/vo-what.wav",
+			"seconds": 3.05,
+			"provider": "system",
+			"hash": "53ac470861c13a9f"
+		},
+		"demo": {
+			"file": "audio/recargas/vo-demo.wav",
+			"seconds": 5.63,
+			"provider": "system",
+			"hash": "27ea154d1ce328fa"
+		},
+		"gold": {
+			"file": "audio/recargas/vo-gold.wav",
+			"seconds": 2.63,
+			"provider": "system",
+			"hash": "4da960b38978344e"
+		},
+		"sats": {
+			"file": "audio/recargas/vo-sats.wav",
+			"seconds": 2.67,
+			"provider": "system",
+			"hash": "abb414739559048a"
+		},
+		"cta": {
+			"file": "audio/recargas/vo-cta.wav",
+			"seconds": 3.21,
+			"provider": "system",
+			"hash": "f25abdbb2197eda8"
+		}
+	},
+	"music": null
+}

@@ -6,9 +6,12 @@ import { FORMATS, FPS, Video, buildTimeline } from './kit'
 // su voice.json, corre `npm run audio <nombre>` y añade aquí una línea.
 import { scenes as mcpScenes } from './videos/mcp'
 import mcpTiming from './videos/mcp/timing.json'
+import { scenes as recargasScenes } from './videos/recargas'
+import recargasTiming from './videos/recargas/timing.json'
 
 const VIDEOS = {
 	mcp: buildTimeline(mcpScenes, mcpTiming),
+	recargas: buildTimeline(recargasScenes, recargasTiming),
 }
 
 // Las props de una composición tienen que ser JSON, y la línea de tiempo lleva componentes:
