@@ -2,39 +2,39 @@
 	"voice": {
 		"hook": {
 			"file": "audio/recargas/vo-hook.wav",
-			"seconds": 3.3,
-			"provider": "system",
-			"hash": "f8b5ccfb1c312011"
+			"seconds": 3.58,
+			"provider": "elevenlabs",
+			"hash": "e7debb4a57ec2bac"
 		},
 		"what": {
 			"file": "audio/recargas/vo-what.wav",
-			"seconds": 3.05,
-			"provider": "system",
-			"hash": "53ac470861c13a9f"
+			"seconds": 3.45,
+			"provider": "elevenlabs",
+			"hash": "dc7b006a9d4728fd"
 		},
 		"demo": {
 			"file": "audio/recargas/vo-demo.wav",
-			"seconds": 5.63,
-			"provider": "system",
-			"hash": "27ea154d1ce328fa"
+			"seconds": 6.06,
+			"provider": "elevenlabs",
+			"hash": "d2ef26d2a76f7807"
 		},
 		"gold": {
 			"file": "audio/recargas/vo-gold.wav",
-			"seconds": 2.63,
-			"provider": "system",
-			"hash": "4da960b38978344e"
+			"seconds": 3.03,
+			"provider": "elevenlabs",
+			"hash": "805c4131a4cb12e5"
 		},
 		"sats": {
 			"file": "audio/recargas/vo-sats.wav",
-			"seconds": 2.67,
-			"provider": "system",
-			"hash": "abb414739559048a"
+			"seconds": 2.98,
+			"provider": "elevenlabs",
+			"hash": "72b4d446e7ade507"
 		},
 		"cta": {
 			"file": "audio/recargas/vo-cta.wav",
-			"seconds": 3.21,
-			"provider": "system",
-			"hash": "f25abdbb2197eda8"
+			"seconds": 3.03,
+			"provider": "elevenlabs",
+			"hash": "345f3592ccd8eea7"
 		}
 	},
 	"music": null
