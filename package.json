@@ -5,7 +5,8 @@
   "scripts": {
     "studio": "remotion studio src/index.jsx",
     "audio": "node scripts/audio.mjs",
-    "video": "node scripts/render.mjs"
+    "video": "node scripts/render.mjs",
+    "music": "node scripts/music.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^8.17.10",

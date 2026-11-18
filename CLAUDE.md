@@ -51,6 +51,7 @@ npm run audio <video> -- --provider elevenlabs --dry   # qué generaría y cuán
 npm run audio <video> -- --provider elevenlabs         # voz natural, DE PAGO: se pregunta antes
 npm run audio -- --voices          # voces de la cuenta de ElevenLabs, con su id
 npm run audio <video> -- --try <id>,<id> --scene hook  # prueba de oído en out/voces/ (de pago)
+npm run music <nombre> -- --prompt "estilo" --seconds 30   # pista en out/musica/ (de pago)
 npm run video <video>              # renderiza los dos formatos
 npm run video <video> -- --mute    # además, versiones sin sonido
 npx remotion still src/index.jsx <video>-feed out/x.png --frame=120   # un fotograma para revisar
