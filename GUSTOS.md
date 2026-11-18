@@ -12,6 +12,9 @@ además se aplica en `src/kit.jsx`. Una nota nueva que contradice a una vieja la
   con el morado de la marca, una idea por escena, texto grande y corto, un chat de ejemplo con
   las cifras en verde, y un cierre con la dirección en un botón.
 
+- 17 nov 2026: el video de recargas a Cuba con Kate y la música «energía anuncio» le pareció
+  «perfecto». Es la referencia de cómo debe quedar una promo.
+
 ## No le gusta
 
 - 17 nov 2026: la primera versión, vista ya con voz, le pareció «pobre». Pidió «más pacotilla

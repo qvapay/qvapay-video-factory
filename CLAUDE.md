@@ -11,6 +11,10 @@ Erich da el tema o una lista de novedades y de aquí salen los videos para redes
 2. Si falta un dato (dirección exacta, pasos, precios, límites), pregúntalo. Nunca inventes
    cifras, tasas ni límites; las cifras de un ejemplo en pantalla se avisan como ejemplo.
 3. Comprueba que lo que el video promete ya está disponible para los usuarios.
+4. Contrasta el guion con el código de la app (`~/webs/qpweb`, rama `origin/main`, y sus notas
+   de versión en `scripts/release/notes.js`): precios, fechas, condiciones y a quién aplica cada
+   beneficio. Un guion puede venir con datos ciertos para un tipo de usuario y falsos para el
+   resto; lo que se corrija se le cuenta a Erich antes de generar la voz.
 
 ## Reglas de marca
 
